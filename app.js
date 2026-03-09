@@ -10,3 +10,14 @@ app.get('/api/food', (req, res) => {
 app.listen(3000, () => {
   console.log('Server running on port 3000');
 });
+
+// POST API - Add new food item
+app.post('/api/food', (req, res) => {
+  const { name } = req.body;
+  res.json({ message: `Food item '${name}' added successfully!` });
+});
+
+// DELETE API - Remove a food item
+app.delete('/api/food/:id', (req, res) => {
+  res.json({ message: `Food item ${req.params.id} deleted successfully!` });
+});
