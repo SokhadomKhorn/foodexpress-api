@@ -1,11 +1,3 @@
-
----
-
-# ✅ CLEAN VERSION (COPY THIS EXACTLY)
-
-(THIS ONE HAS NO BACKTICKS 👇)
-
-```groovy
 pipeline {
     agent any
 
@@ -40,7 +32,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                sh "docker build -t $DOCKER_IMAGE_FULL -t $DOCKER_IMAGE_LATEST ."
+                sh """
+                docker build -t $DOCKER_IMAGE_FULL -t $DOCKER_IMAGE_LATEST .
+                """
             }
         }
 
