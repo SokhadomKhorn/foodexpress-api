@@ -59,11 +59,12 @@ pipeline {
         stage('Terraform: Provision EC2') {
             steps {
                 echo 'Provisioning EC2 with Terraform...'
-                withCredentials([
-                    string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
-                    string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY'),
-                    string(credentialsId: 'aws-session-token', variable: 'AWS_SESSION_TOKEN')
-                ]) {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                     credentialsId: 'aws-credentials',
+                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+             ]]) {
                     dir('terraform') {
                         sh 'terraform init'
                         sh 'terraform validate'
