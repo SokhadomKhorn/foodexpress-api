@@ -124,12 +124,6 @@ resource "aws_instance" "foodexpress_server" {
     systemctl start docker
     usermod -aG docker ubuntu
 
-    docker pull ${var.docker_image}
-    docker run -d \
-      --name foodexpress \
-      --restart always \
-      -p 80:5000 \
-      ${var.docker_image}
 
     echo "FoodExpress deployment complete."
   EOF
