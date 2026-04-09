@@ -74,7 +74,7 @@ stages {
                 dir('terraform') {
                     bat 'terraform init'
                     bat 'terraform validate'
-                    bat 'terraform apply -auto-approve'
+                    bat 'terraform apply -auto-approve -var="docker_image=sokhadomkhorn/foodexpress-api:latest"'
                     
                     script {
                         env.EC2_PUBLIC_IP = bat(
