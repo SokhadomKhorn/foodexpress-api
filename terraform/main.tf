@@ -30,7 +30,7 @@ resource "aws_security_group" "sg" {
 resource "aws_instance" "app" {
   ami           = "ami-0ec10929233384c7f"   # Ubuntu (from your PDF)
   instance_type = "t3.micro"
-  key_name      = "your-key-name"
+  key_name      = "foodexpress"
 
   vpc_security_group_ids = [aws_security_group.sg.id]
 
