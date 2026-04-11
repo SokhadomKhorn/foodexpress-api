@@ -9,6 +9,6 @@ app.get('/view', (req, res) => {
     res.send('<html><body>INSIDE VIEW API..</body></html>');
 });
 
-app.listen(5000, function() {
+app.listen(5000, "0.0.0.0", function() {
     console.log('EXPRESS Server Started at Port No: 5000');
 });
