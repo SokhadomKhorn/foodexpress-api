@@ -1,32 +1,32 @@
 pipeline {
     agent any
 
+    environment {
+        EC2_IP = "98.89.47.255"
+    }
+
     stages {
 
-        stage('Clone') {
+        stage('Clone Repo') {
             steps {
                 git 'https://github.com/SokhadomKhorn/foodexpress-api.git'
             }
         }
 
-        stage('Build Docker') {
+        stage('Deploy to EC2') {
             steps {
-                sh 'docker build -t foodexpress .'
-            }
-        }
-
-        stage('Terraform Deploy') {
-            steps {
-                dir('terraform') {
-                    sh 'terraform init'
-                    sh 'terraform apply -auto-approve'
+                sshagent(['ec2-key']) {
+                    sh """
+                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} '
+                        cd foodexpress-api &&
+                        git pull &&
+                        docker stop \$(docker ps -q) || true &&
+                        docker rm \$(docker ps -aq) || true &&
+                        docker build -t foodexpress . &&
+                        docker run -d -p 80:5000 foodexpress
+                    '
+                    """
                 }
-            }
-        }
-
-        stage('Run App') {
-            steps {
-                sh 'docker run -d -p 80:3000 foodexpress'
             }
         }
     }
