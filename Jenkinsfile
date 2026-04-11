@@ -9,7 +9,7 @@ pipeline {
 
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/SokhadomKhorn/foodexpress-api.git'
+                git branch: 'main', url: 'https://github.com/SokhadomKhorn/foodexpress-api.git'
             }
         }
 
