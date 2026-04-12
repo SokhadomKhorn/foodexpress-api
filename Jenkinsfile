@@ -15,7 +15,7 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                sshagent(['ec2-key']) {
+                sshagent(['ec2']) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} '
                         cd foodexpress-api &&
